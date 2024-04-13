@@ -20,7 +20,7 @@ public class Repository {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String repository;
     private String organization;
+    private String repository;
 
 }

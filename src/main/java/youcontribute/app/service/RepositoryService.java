@@ -9,18 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public record RepositoryService( RepositoryRepository repository ) {
+public record RepositoryService(RepositoryRepository repository) {
 
 
     public List<Repository> findAll() {
         return repository.findAll();
     }
 
-    public void create(String repository, String organization) {
+    public void create(String organization, String repository) {
         Repository repo = Repository.builder()
-                                .repository(repository)
-                                .organization(organization)
-                                .build();
+                .organization(organization)
+                .repository(repository)
+                .build();
 
         repository().save(repo);
     }
