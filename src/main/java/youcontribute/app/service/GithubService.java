@@ -9,21 +9,27 @@ import org.springframework.web.client.RestTemplate;
 import youcontribute.app.config.GithubProperties;
 import youcontribute.app.model.GithubIssueResponse;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public record GithubService( RestTemplate restTemplate,
                              GithubProperties githubProperties ) {
 
 
 
-    public GithubIssueResponse[] listIssues(String organization, String repository) {
+    public GithubIssueResponse[] listIssues(String organization, String repository, ZonedDateTime date) {
 
         // since YYYY-MM-DDTHH:MM:SSZ
 
-        String issuesUrl = String.format("%s/repos/%s/%s/issues",
+        String issuesUrl = String.format("%s/repos/%s/%s/issues?since=%s",
                 this.githubProperties.getApiUrl(),
                 organization,
-                repository
+                repository,
+                date.format(DateTimeFormatter.ISO_INSTANT)
         );
+
+
 
         HttpHeaders headers = new HttpHeaders();
         headers.add( HttpHeaders.AUTHORIZATION , "token " + this.githubProperties.getToken());

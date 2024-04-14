@@ -15,6 +15,9 @@ import org.springframework.web.client.RestTemplate;
 import youcontribute.app.config.GithubProperties;
 import youcontribute.app.model.GithubIssueResponse;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.BDDAssertions.then;
 
@@ -34,8 +37,20 @@ class GithubServiceTest {
     @Test
     void it_should_list_all_repositories () throws Exception {
     	//given
+        ZonedDateTime date = ZonedDateTime.parse("2024-04-14T10:32:21Z");
+
+        String organization = "libgdx";
+        String repository = "libgdx";
+
+        String issuesUrl = String.format("/repos/%s/%s/issues",
+                organization,
+                repository
+        );
+
+
         extension.stubFor(
-                get( urlPathEqualTo( "/repos/libgdx/libgdx/issues") )
+                get( urlPathEqualTo(issuesUrl) )
+                        .withQueryParam("since", equalTo("2024-04-14T10:32:21Z"))
                         .willReturn( aResponse()
                                 .withBodyFile("github/issues.json")
                                 .withStatus(200)
@@ -45,10 +60,9 @@ class GithubServiceTest {
         );
 
 
-
     	//when
         GithubIssueResponse[] responseList =
-                this.githubService.listIssues("libgdx", "libgdx");
+                this.githubService.listIssues(organization, repository, date);
 
         //then
         GithubIssueResponse response = responseList[0];

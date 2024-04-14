@@ -5,12 +5,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @SpringBootApplication
 @EnableFeignClients
+@EnableScheduling
 public class AppApplication {
 
     public static void main(String[] args) {
@@ -18,7 +26,8 @@ public class AppApplication {
 
         // since YYYY-MM-DDTHH:MM:SSZ
 //        ZonedDateTime date = ZonedDateTime.now();
-//        System.out.println(date);
+//        System.out.println(date.format(DateTimeFormatter.ISO_INSTANT));
+
     }
 
 

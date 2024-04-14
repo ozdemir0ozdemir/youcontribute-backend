@@ -9,6 +9,7 @@ import youcontribute.app.service.GithubService;
 import youcontribute.app.service.IssueService;
 import youcontribute.app.service.RepositoryService;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,8 +33,10 @@ public class RepositoryManager {
 
     @Async
     public void importIssues(Repository repository) {
+        ZonedDateTime date = ZonedDateTime.now().minusDays(1L);
+
         GithubIssueResponse[] issues =
-                this.githubService.listIssues(repository.getOrganization(), repository.getRepository());
+                this.githubService.listIssues(repository.getOrganization(), repository.getRepository(), date);
 
         if(issues.length == 0){
             return;

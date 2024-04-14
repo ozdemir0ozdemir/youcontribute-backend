@@ -16,6 +16,8 @@ public class Issue {
     private Long githubId;
     private String state;
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String body;
     private Integer issueNumber;
 
