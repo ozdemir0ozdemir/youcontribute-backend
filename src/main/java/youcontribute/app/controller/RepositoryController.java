@@ -15,7 +15,7 @@ public record RepositoryController( RepositoryService service ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody CreateRepositoryRequest request) {
-        this.service.create(request.getRepository(), request. getOrganization());
+        this.service.create(request. getOrganization(), request.getRepository());
     }
 
     @GetMapping

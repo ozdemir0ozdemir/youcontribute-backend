@@ -14,13 +14,13 @@ import java.util.List;
 public record ImportIssueSchedule( RepositoryManager repositoryManager,
                                    RepositoryService repositoryService ) {
 
-    @Scheduled(fixedRateString = "${app.import-frequency}")
+    @Scheduled(fixedRateString = "${app.import-frequency}",initialDelay = 20000)
     public void importIssues() {
-        log.info("Import scheduler started!");
-
-        List<Repository> repositoryList = this.repositoryService.findAll();
-        repositoryList.forEach(this.repositoryManager::importIssues);
-
-        log.info("Import scheduler finished!");
+//        log.info("Import scheduler started!");
+//
+//        List<Repository> repositoryList = this.repositoryService.findAll();
+//        repositoryList.forEach(this.repositoryManager::importIssues);
+//
+//        log.info("Import scheduler finished!");
     }
 }

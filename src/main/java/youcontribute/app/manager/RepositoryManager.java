@@ -1,7 +1,10 @@
 package youcontribute.app.manager;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import youcontribute.app.config.ApplicationProperties;
+import youcontribute.app.config.GithubProperties;
 import youcontribute.app.model.GithubIssueResponse;
 import youcontribute.app.model.Issue;
 import youcontribute.app.model.Repository;
@@ -10,22 +13,19 @@ import youcontribute.app.service.IssueService;
 import youcontribute.app.service.RepositoryService;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RepositoryManager {
 
     private final RepositoryService repositoryService;
     private final GithubService githubService;
     private final IssueService issueService;
-
-    public RepositoryManager(RepositoryService repositoryService, GithubService githubService, IssueService issueService) {
-        this.repositoryService = repositoryService;
-        this.githubService = githubService;
-        this.issueService = issueService;
-    }
+    private final ApplicationProperties applicationProperties;
 
     public void importRepository(String organization, String repository) {
         this.repositoryService.create(organization, repository);
@@ -33,8 +33,7 @@ public class RepositoryManager {
 
     @Async
     public void importIssues(Repository repository) {
-        ZonedDateTime date = ZonedDateTime.now().minusDays(1L);
-
+        ZonedDateTime date = ZonedDateTime.now().minusSeconds(applicationProperties.getImportFrequency() / 1000);
         GithubIssueResponse[] issues =
                 this.githubService.listIssues(repository.getOrganization(), repository.getRepository(), date);
 

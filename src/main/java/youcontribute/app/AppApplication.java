@@ -23,11 +23,6 @@ public class AppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(AppApplication.class, args);
-
-        // since YYYY-MM-DDTHH:MM:SSZ
-//        ZonedDateTime date = ZonedDateTime.now();
-//        System.out.println(date.format(DateTimeFormatter.ISO_INSTANT));
-
     }
 
 
