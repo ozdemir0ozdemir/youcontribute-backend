@@ -10,12 +10,14 @@ import java.util.List;
 @Builder
 public class RepositoryResponse {
 
+    private Long id;
     private String repository;
     private String organization;
 
 
     public static RepositoryResponse createFor(Repository repository) {
         return RepositoryResponse.builder()
+                .id(repository.getId())
                 .repository(repository.getRepository())
                 .organization(repository.getOrganization())
                 .build();

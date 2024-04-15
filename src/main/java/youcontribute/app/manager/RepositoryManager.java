@@ -34,6 +34,7 @@ public class RepositoryManager {
     @Async
     public void importIssues(Repository repository) {
         ZonedDateTime date = ZonedDateTime.now().minusSeconds(applicationProperties.getImportFrequency() / 1000);
+//        ZonedDateTime date = ZonedDateTime.now().minusMonths(1L);
         GithubIssueResponse[] issues =
                 this.githubService.listIssues(repository.getOrganization(), repository.getRepository(), date);
 

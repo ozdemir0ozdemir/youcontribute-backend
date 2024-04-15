@@ -24,4 +24,9 @@ public class IssueService {
     public void saveAll(List<Issue> issues) {
         issueRepository.saveAll(issues);
     }
+
+    public List<Issue> findByRepositoryId(Long repositoryId){
+        // TODO: is repository exists?
+        return this.issueRepository.findIssueByRepositoryId(repositoryId);
+    }
 }

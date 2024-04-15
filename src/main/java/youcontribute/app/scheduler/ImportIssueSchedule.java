@@ -16,11 +16,11 @@ public record ImportIssueSchedule( RepositoryManager repositoryManager,
 
     @Scheduled(fixedRateString = "${app.import-frequency}",initialDelay = 20000)
     public void importIssues() {
-//        log.info("Import scheduler started!");
-//
-//        List<Repository> repositoryList = this.repositoryService.findAll();
-//        repositoryList.forEach(this.repositoryManager::importIssues);
-//
-//        log.info("Import scheduler finished!");
+        log.info("Import scheduler started!");
+
+        List<Repository> repositoryList = this.repositoryService.findAll();
+        repositoryList.forEach(this.repositoryManager::importIssues);
+
+        log.info("Import scheduler finished!");
     }
 }
