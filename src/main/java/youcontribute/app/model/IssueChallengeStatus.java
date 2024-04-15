@@ -1,14 +1,14 @@
 package youcontribute.app.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public enum IssueChallengeStatus {
+public enum IssueChallengeStatus implements Serializable {
 
     PENDING("PENDING"),
     ACCEPTED("ACCEPTED"),
     REJECTED("REJECTED"),
-    PROGRESSING("PROGRESSING"),
     COMPLETED("COMPLETED");
 
     private String value;
@@ -19,7 +19,8 @@ public enum IssueChallengeStatus {
 
     public static List<IssueChallengeStatus> ongoingStatuses() {
         return Arrays.stream(IssueChallengeStatus.values())
-                .filter(status -> PENDING.equals(status) ||  ACCEPTED.equals(status) ||  PROGRESSING.equals(status) )
+                .filter(status -> PENDING.equals(status) ||  ACCEPTED.equals(status) )
                 .toList();
     }
+
 }

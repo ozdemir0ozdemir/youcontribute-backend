@@ -6,6 +6,8 @@ import youcontribute.app.model.IssueChallenge;
 import youcontribute.app.model.IssueChallengeStatus;
 import youcontribute.app.repository.IssueChallengeRepository;
 
+import java.util.List;
+
 @Service
 public record IssueChallengeService(IssueChallengeRepository issueChallengeRepository) {
 
@@ -24,5 +26,9 @@ public record IssueChallengeService(IssueChallengeRepository issueChallengeRepos
        return issueChallengeRepository
                .findByStatusIn( IssueChallengeStatus.ongoingStatuses() )
                .isPresent();
+    }
+
+    public List<IssueChallenge> findAll() {
+        return issueChallengeRepository.findAll();
     }
 }

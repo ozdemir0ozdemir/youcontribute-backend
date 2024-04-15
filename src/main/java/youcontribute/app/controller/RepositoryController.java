@@ -27,7 +27,7 @@ public record RepositoryController( RepositoryService service,
         return RepositoryResponse.createFor(this.service.findAll());
     }
 
-    @GetMapping("{repositoryId}/issues")
+    @GetMapping("/{repositoryId}/issues")
     @ResponseStatus(HttpStatus.OK)
     public List<Issue> findIssuesByRepositoryId(@PathVariable Long repositoryId) {
         return issueService.findByRepositoryId(repositoryId);

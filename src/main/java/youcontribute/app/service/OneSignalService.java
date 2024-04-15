@@ -30,7 +30,7 @@ public record OneSignalService( ApplicationProperties applicationProperties ) {
                 "reject-button",
                 "Reject",
                 "",
-                "http://localhost:4200/challenge/" + challenge.getId() + "/accept"
+                "http://localhost:4200/challenge/" + challenge.getId() + "/reject"
         );
 
         String message = String.format("Would you like to solve the issue? \nRepository : %s \nIssue : %s",
