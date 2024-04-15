@@ -15,6 +15,20 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationProperties {
 
     private Long importFrequency;
+    private Long challengeFrequency;
+
+    private OneSignalProperties oneSignalProperties;
 
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class OneSignalProperties {
+
+
+        private String apiAuthKey;
+        private String appId;
+
+        private String templateId;
+    }
 }

@@ -29,6 +29,8 @@ dependencies {
 
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
+//    implementation "org.openapitools:onesignal-java-client:1.2.1"
+    implementation 'com.currencyfair:onesignal:1.0.15'
 
     testRuntimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

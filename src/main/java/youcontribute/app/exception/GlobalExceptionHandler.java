@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = RepositoryAlreadyExistsException.class)
-    public ResponseEntity<Object> repositoryAlreadyExistsException(RepositoryAlreadyExistsException ex) {
+    public ResponseEntity<ErrorResponse> repositoryAlreadyExistsException(RepositoryAlreadyExistsException ex) {
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
@@ -22,6 +22,20 @@ public class GlobalExceptionHandler {
                                 ex.getMessage(),
                                 ex.getClass().getSimpleName(),
                                 "409 - CONFLICT",
+                                ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
+                        )
+                );
+    }
+
+    @ExceptionHandler(value = EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> entityNotFoundException(EntityNotFoundException ex) {
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(
+                                ex.getMessage(),
+                                ex.getClass().getSimpleName(),
+                                "404 - NOT_FOUND",
                                 ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME)
                         )
                 );
