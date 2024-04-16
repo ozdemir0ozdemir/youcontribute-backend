@@ -9,12 +9,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/challenge")
-public record ChallengeController( IssueChallengeService issueChallengeService ) {
+public record IssueChallengeController(IssueChallengeService issueChallengeService ) {
 
     @PatchMapping("/{challengeId}")
     public void updateStatus(@PathVariable Long challengeId,
                              @RequestBody UpdateChallengeStatusRequest request) {
 
+        // TODO: accept or reject challenge
         System.out.println("\n\nCHALLENGE ID: " + challengeId + ", Status : " + request.getStatus()+"\n\n");
 
     }

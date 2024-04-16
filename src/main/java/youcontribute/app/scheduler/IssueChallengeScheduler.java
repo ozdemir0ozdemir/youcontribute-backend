@@ -1,30 +1,36 @@
 package youcontribute.app.scheduler;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import youcontribute.app.model.Issue;
 import youcontribute.app.model.IssueChallenge;
+import youcontribute.app.model.IssueChallengeStatus;
+import youcontribute.app.model.Repository;
+import youcontribute.app.service.GithubService;
 import youcontribute.app.service.IssueChallengeService;
 import youcontribute.app.service.IssueService;
 import youcontribute.app.service.OneSignalService;
 
+import java.util.Arrays;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ChallengeIssuesScheduler {
+public class IssueChallengeScheduler {
 
     private final IssueService issueService;
     private final IssueChallengeService issueChallengeService;
     private final OneSignalService oneSignalService;
+    private final GithubService githubService;
 
     @Scheduled(fixedRateString = "${app.challenge-frequency}")
-    public void challengeIssuesScheduler(){
-        log.info("Challenge issue scheduler started.");
-        if(this.issueChallengeService.hasOngoingChallenge()){
-            log.warn("There is already an ongoing challenge, skipping...");
+    public void challengeIssuesScheduler() {
+        log.info("IssueChallengeScheduler started.");
+
+        if (this.issueChallengeService.hasOngoingChallenge()) {
+            log.warn("IssueChallengeScheduler skipping.");
             return;
         }
         Issue randomIssue = this.issueService.findRandomIssue();
@@ -33,6 +39,6 @@ public class ChallengeIssuesScheduler {
         IssueChallenge challenge = issueChallengeService.create(randomIssue);
         oneSignalService.sendNotification(challenge);
 
-        log.info("Challenge issue scheduler finished.");
+        log.info("IssueChallengeScheduler finished.");
     }
 }
