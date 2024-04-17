@@ -14,9 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class GithubProperties {
 
-    @Value("${github.token}")
     private String token;
-
-    @Value("${github.api-url}")
     private String apiUrl;
+    private String oAuthId;
+    private String oAuthSecret;
+    private String oAuthUrl;
+    private String oAuthAccessTokenUrl;
 }

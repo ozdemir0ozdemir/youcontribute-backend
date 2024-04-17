@@ -7,16 +7,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import youcontribute.app.config.GithubProperties;
+import youcontribute.app.model.GithubAccessTokenReponse;
 import youcontribute.app.model.GithubIssueResponse;
 import youcontribute.app.model.GithubPullResponse;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public record GithubService( RestTemplate restTemplate,
                              GithubProperties githubProperties ) {
-
 
 
     public GithubIssueResponse[] listIssues(String organization, String repository, ZonedDateTime date) {
@@ -65,6 +67,31 @@ public record GithubService( RestTemplate restTemplate,
                 );
 
         return response.getBody();
+    }
+
+    public String getAuthorizeUrl() {
+        return String.format( "%s?client_id=%s",
+                githubProperties.getOAuthUrl(),
+                githubProperties.getOAuthId()
+        );
+    }
+
+    public GithubAccessTokenReponse getAccessToken(String code) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("client_id", githubProperties.getOAuthId());
+        params.put("client_secret", githubProperties.getOAuthSecret());
+        params.put("code", code);
+
+        // TODO: nullpointerexception may thrown
+        GithubAccessTokenReponse response = this.restTemplate.postForObject(
+                "https://github.com/login/oauth/access_token?client_id={client_id}&client_secret={client_secret}&code={code}",
+                null,
+                GithubAccessTokenReponse.class,
+                params
+        );
+
+        return response;
     }
 
 }
